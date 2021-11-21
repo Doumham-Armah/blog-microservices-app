@@ -4,27 +4,27 @@ const { randomBytes } = require("crypto");
 const app = express();
 app.use(express.json());
 
-const posts = {};
+const comments = {};
 
-app.get("/posts", (req, res) => {
-  res.send(posts);
+app.get("/posts/:id/comments", (req, res) => {
+  res.send(comments);
 });
 
-app.post("/posts", (req, res) => {
+app.post("/posts/:id/comments", (req, res) => {
   // generate random ID
   const id = randomBytes(4).toString("hex");
   //   extract the title of the post
   const { title } = req.body;
 
-  //   add post to posts object
-  posts[id] = {
+  //   add post to comments object
+  comments[id] = {
     id,
     title,
   };
 
   // status 201 indicates a resource was created
   // send back the created post
-  res.status(201).send(posts[id]);
+  res.status(201).send(comments[id]);
 });
 
 app.listen(4000, () => {
